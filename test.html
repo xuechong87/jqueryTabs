@@ -1,0 +1,132 @@
+﻿<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>基于JQUERY的选项卡</title>
+		<style type="text/css">
+
+			.tabs_tab{
+				height: 34px; 
+				font-size: 18px;
+				font-weight: bold;
+
+				color: #009933;
+				max-width: 240px;
+				min-width: 120px;
+
+				border-top-left-radius: 4px;
+				border-top-right-radius: 4px;
+				background-image: linear-gradient(#FFFFFF, #fafafa);
+				background-repeat: repeat-x;
+				display: block;	
+				border: 1px solid #d5d5d5;
+				background-color: #fafafa;
+				margin-left: 3px;
+				float: left;	
+			}
+
+			.selected{
+				background-image: linear-gradient(#fafafa, #eaeaea);
+				background-color: #eaeaea;
+			}
+
+			.tabs_icon{
+				cursor: pointer;
+				margin: 2px;
+				height: 10px;
+				width: 10px;
+				display: inline;
+				float: left;
+			}
+
+			.tabs_new_children{
+				display: block;
+				background-image: url('add.png');
+			}
+
+			.tabs_edit{
+				display: block;
+				background-image: url('edit.png');
+			}
+
+			.tabs_remove{
+				float: right;
+				display: block;
+				background-image: url('remove.png');
+			}
+
+			.tab_text{
+				clear: both;
+				cursor: pointer;
+				margin: 10px;
+				margin-top: 0px;
+				text-align: center;
+				max-width: 240px;
+				overflow:hidden;
+				text-overflow:ellipsis;
+				white-space:nowrap;
+			}
+
+		</style>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+		</script>
+		<script type="text/javascript">
+		$(function(){
+			
+			
+		});
+		</script>
+	</head>
+	<body>
+		<div>
+			<div class="tabs_tab selected">
+				<span class="tabs_icon_container">
+					<div class="tabs_icon tabs_new_children" ></div>
+					<div class="tabs_icon tabs_edit"></div>
+					<div class="tabs_icon tabs_remove" ></div>
+				</span>
+				<div class="tabs_icon"><!--用于往下挤高度= =|| --></div>
+				<div class="tab_text" title="啊垃垃垃垃垃垃垃垃垃垃垃垃垃圾君">	
+					啊垃垃圾君
+				</div>
+			</div>
+
+			<div class="tabs_tab">
+				<span class="tabs_icon_container">
+					<div class="tabs_icon tabs_new_children" ></div>
+					<div class="tabs_icon tabs_edit"></div>
+					<div class="tabs_icon tabs_remove" ></div>
+				</span>
+				<div class="tabs_icon"><!--用于往下挤高度= =|| --></div>
+				<div class="tab_text" title="啊垃垃垃垃垃垃垃垃垃垃垃垃垃圾君">	
+					啊垃垃垃垃垃垃圾君
+				</div>
+			</div>
+
+			<div class="tabs_tab">
+				<span class="tabs_icon_container">
+					<div class="tabs_icon tabs_new_children" ></div>
+					<div class="tabs_icon tabs_edit"></div>
+					<div class="tabs_icon tabs_remove" ></div>
+				</span>
+				<div class="tabs_icon"><!--用于往下挤高度= =|| --></div>
+				<div class="tab_text" title="啊垃垃垃垃垃垃垃垃垃垃垃垃垃圾君">	
+					啊垃垃垃垃垃垃垃垃垃圾君
+				</div>
+			</div>
+
+			<div class="tabs_tab">
+				<span class="tabs_icon_container" style="display:none;">
+					<div class="tabs_icon tabs_new_children" ></div>
+					<div class="tabs_icon tabs_edit"></div>
+					<div class="tabs_icon tabs_remove" ></div>
+				</span>
+				<div class="tabs_icon"><!--用于往下挤高度= =|| --></div>
+				<div class="tab_text" title="啊垃垃垃垃垃垃垃垃垃垃垃垃垃圾君">	
+					啊垃垃垃垃垃垃垃垃垃垃垃垃垃圾君
+				</div>
+			</div>
+
+
+		</div>
+	</body>
+</html>
