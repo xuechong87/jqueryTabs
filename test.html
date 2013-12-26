@@ -1,4 +1,5 @@
-﻿<html>
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>基于JQUERY的选项卡</title>
@@ -36,6 +37,7 @@
 				width: 10px;
 				display: inline;
 				float: left;
+				
 			}
 
 			.tabs_new_children{
@@ -66,18 +68,41 @@
 				white-space:nowrap;
 			}
 
+			.tabs_icon_container{
+				display:none;
+			}
+
 		</style>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">
 		</script>
 		<script type="text/javascript">
+		var showIcoOnHover = function (){
+			if($(".tabs_icon_container").length >0 ){
+				$(".tabs_icon_container").each(function(){
+					var tabico = $(this);
+					var getTab = function(){
+						return tabico;
+					};
+					$(this).parent().mouseover(function(){
+						getTab().show();
+					}).mouseout(function(){
+						getTab().hide();
+					});
+				});
+			}
+		};
+
 		$(function(){
-			
+			showIcoOnHover();
 			
 		});
 		</script>
 	</head>
 	<body>
-		<div>
+
+
+		<div id="tabs_tab_parent">
+
 			<div class="tabs_tab selected">
 				<span class="tabs_icon_container">
 					<div class="tabs_icon tabs_new_children" ></div>
@@ -105,7 +130,7 @@
 			<div class="tabs_tab">
 				<span class="tabs_icon_container">
 					<div class="tabs_icon tabs_new_children" ></div>
-					<div class="tabs_icon tabs_edit"></div>
+					<div class="tabs_icon tabs_edit" ></div>
 					<div class="tabs_icon tabs_remove" ></div>
 				</span>
 				<div class="tabs_icon"><!--用于往下挤高度= =|| --></div>
@@ -115,7 +140,7 @@
 			</div>
 
 			<div class="tabs_tab">
-				<span class="tabs_icon_container" style="display:none;">
+				<span class="tabs_icon_container" >
 					<div class="tabs_icon tabs_new_children" ></div>
 					<div class="tabs_icon tabs_edit"></div>
 					<div class="tabs_icon tabs_remove" ></div>
