@@ -3,30 +3,31 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>基于JQUERY的选项卡</title>
+		<script type="text/javascript" src="jquery183.js"></script>
 		<style type="text/css">
 
 			.tabs_tab{
 				height: 34px; 
 				font-size: 18px;
 				font-weight: bold;
-
 				color: #009933;
 				max-width: 240px;
 				min-width: 120px;
-
 				border-top-left-radius: 4px;
 				border-top-right-radius: 4px;
-				background-image: linear-gradient(#FFFFFF, #fafafa);
+				background-image: linear-gradient(#FFFFFF, #F7F7F7);
 				background-repeat: repeat-x;
 				display: block;	
 				border: 1px solid #d5d5d5;
-				background-color: #fafafa;
+				background-color: #FAFAFA;
 				margin-left: 3px;
 				float: left;	
+
+				display: inline;
 			}
 
-			.selected{
-				background-image: linear-gradient(#fafafa, #eaeaea);
+			.tabs_selected{
+				background-image: linear-gradient(#f4f4f4, #eaeaea);
 				background-color: #eaeaea;
 			}
 
@@ -37,24 +38,27 @@
 				width: 10px;
 				display: inline;
 				float: left;
-				
 			}
+
 
 			.tabs_new_children{
 				display: block;
 				background-image: url('add.png');
 			}
 
+
 			.tabs_edit{
 				display: block;
 				background-image: url('edit.png');
 			}
+
 
 			.tabs_remove{
 				float: right;
 				display: block;
 				background-image: url('remove.png');
 			}
+
 
 			.tab_text{
 				clear: both;
@@ -68,14 +72,67 @@
 				white-space:nowrap;
 			}
 
+
 			.tabs_icon_container{
 				display:none;
 			}
 
+			.tabs_container{
+				position: absolute;
+				display: inline;
+				height: 36px;
+				overflow:hidden;
+			}
+
+
+			.tabs_tab_parent{
+				padding: 0px;
+				margin: 0px;
+				height: 36px;
+				float: left;
+			}
+
+			.tabs_arrow{
+				border: 1px solid #d5d5d5;
+				background-color: #fafafa;
+				width: 20PX;
+				height: 34PX;
+				cursor: pointer;
+				display: none;
+				margin-left: 1px;
+				margin-right: 1px;
+			}
+
+			.tabs_arrow_left{
+				float: left;
+				background-image: url('arr_l.png');
+			}
+
+			.tabs_arrow_right{
+				float: right;
+				background-image: url('arr_r.png');
+			}
+
+			.tabs_arrow_hover{
+				background-color: #FFFFFF;
+			}
+
+			.tabs_hover{
+				background-color: #FFFFFF;
+				background-image: none;
+			}
+
+			.tabs_warp{
+				width: 760px;
+			}
+
+
 		</style>
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">
-		</script>
+
+		
+		
 		<script type="text/javascript">
+
 		var showIcoOnHover = function (){
 			if($(".tabs_icon_container").length >0 ){
 				$(".tabs_icon_container").each(function(){
@@ -92,66 +149,173 @@
 			}
 		};
 
-		$(function(){
+		var initWidths = function(){
+			var _totalWidth = 0;
+			$(".tabs_tab").each(function(){
+				_totalWidth += $(this).width() + 5;
+			});
+			$("#tabs_tab_parent").width(_totalWidth);
+
+			$("#tabs_container").width($(".tabs_warp").width() - ($(".tabs_arrow").width()*2 + 8));
+		};
+
+		var initMoves = function(){
+
+			var _container = $("#tabs_container");
+			var _tabParent = $("#tabs_tab_parent");
+			var _move = 140;
+
+			function maxMargin(){
+				return $("#tabs_container").width() - $("#tabs_tab_parent").width();
+			}
+
+			function pxToInt(input){
+				return parseInt(input.substring(0,input.length-2));
+			}
+
+			if(_tabParent.width() > _container.width()){
+				$(".tabs_arrow").show();
+			}
+
+			$(".tabs_arrow_right").click(function(){
+				var margin = _tabParent.css('margin-left');
+				margin = pxToInt(margin);
+				margin = margin - _move;
+				if(margin < maxMargin()){
+					margin = maxMargin();
+				}
+				_tabParent.animate({marginLeft:margin+'px'},300);
+			});
+
+			$(".tabs_arrow_left").click(function(){
+				var margin = _tabParent.css('margin-left');
+				margin = pxToInt(margin);
+				margin = margin + _move;
+				if(margin > 0){
+					margin = 0;
+				}
+				_tabParent.animate({marginLeft:margin+'px'},300);
+			});
+		};
+
+		var initHovers = function(){
+
+			$(".tabs_tab").mouseover(function(){
+				if(!$(this).hasClass('tabs_selected')){
+					$(this).addClass('tabs_hover');
+				}
+			}).mouseout(function(){
+				$(this).removeClass('tabs_hover');
+			});
+
+			$(".tabs_arrow").mouseover(function(){
+				$(this).addClass('tabs_arrow_hover');
+			}).mouseout(function(){
+				$(this).removeClass('tabs_arrow_hover');
+			});
+
+		};
+
+		var initTabs = function(){
+
 			showIcoOnHover();
+			initWidths();
+			initMoves();
+			initHovers();
+	
+			$(".tab_text").each(function(){//点击字的事件
+				$(this).click(function(){
+					$(this).parent().removeClass("tabs_hover");
+					$(".tabs_tab").removeClass("tabs_selected");
+					$(this).parent().addClass("tabs_selected");
+					
+				});
+			});
+		};		
+
+		
+
+		$(function(){
 			
+			initTabs();
+
 		});
+
+		
+
 		</script>
 	</head>
 	<body>
 
+			<div class="tabs_warp">
+				<div class="tabs_arrow tabs_arrow_left"></div>
+				<div class="tabs_arrow tabs_arrow_right"></div>
+				<div id="tabs_container" class="tabs_container" >
 
-		<div id="tabs_tab_parent">
+					<ul class="tabs_tab_parent" id="tabs_tab_parent" >
 
-			<div class="tabs_tab selected">
-				<span class="tabs_icon_container">
-					<div class="tabs_icon tabs_new_children" ></div>
-					<div class="tabs_icon tabs_edit"></div>
-					<div class="tabs_icon tabs_remove" ></div>
-				</span>
-				<div class="tabs_icon"><!--用于往下挤高度= =|| --></div>
-				<div class="tab_text" title="啊垃垃垃垃垃垃垃垃垃垃垃垃垃圾君">	
-					啊垃垃圾君
+						<li class="tabs_tab tabs_selected">
+							<span class="tabs_icon_container">
+								<div class="tabs_icon tabs_new_children" ></div>
+								<div class="tabs_icon tabs_edit"></div>
+								<div class="tabs_icon tabs_remove" ></div>
+							</span>
+							<div class="tabs_icon"><!--用于往下挤高度= =|| --></div>
+							<div class="tab_text" title="啊垃垃垃垃垃垃垃垃垃垃垃垃垃圾君">	
+								啊垃垃圾君
+							</div>
+						</li>
+
+						<li class="tabs_tab">
+							<span class="tabs_icon_container">
+								<div class="tabs_icon tabs_new_children" ></div>
+								<div class="tabs_icon tabs_edit"></div>
+								<div class="tabs_icon tabs_remove" ></div>
+							</span>
+							<div class="tabs_icon"><!--用于往下挤高度= =|| --></div>
+							<div class="tab_text" title="啊垃垃垃垃垃垃垃垃垃垃垃垃垃圾君">	
+								啊垃垃垃垃垃垃圾君
+							</div>
+						</li>
+						
+						<li class="tabs_tab">
+							<span class="tabs_icon_container">
+								<div class="tabs_icon tabs_new_children" ></div>
+								<div class="tabs_icon tabs_edit" ></div>
+								<div class="tabs_icon tabs_remove" ></div>
+							</span>
+							<div class="tabs_icon"><!--用于往下挤高度= =|| --></div>
+							<div class="tab_text" title="啊垃垃垃垃垃垃垃垃垃垃垃垃垃圾君">	
+								啊垃垃垃垃垃垃垃垃垃圾君
+							</div>
+						</li>
+
+						<li class="tabs_tab">
+							<span class="tabs_icon_container" >
+								<div class="tabs_icon tabs_new_children" ></div>
+								<div class="tabs_icon tabs_edit"></div>
+								<div class="tabs_icon tabs_remove" ></div>
+							</span>
+							<div class="tabs_icon"><!--用于往下挤高度= =|| --></div>
+							<div class="tab_text" title="啊垃垃垃垃垃垃垃垃垃垃垃垃垃圾君">	
+								啊垃垃垃垃垃垃垃垃垃垃垃垃垃圾君
+							</div>
+						</li>
+
+						<li class="tabs_tab">
+							<span class="tabs_icon_container" >
+								<div class="tabs_icon tabs_new_children" ></div>
+								<div class="tabs_icon tabs_edit"></div>
+								<div class="tabs_icon tabs_remove" ></div>
+							</span>
+							<div class="tabs_icon"><!--用于往下挤高度= =|| --></div>
+							<div class="tab_text" title="啊垃垃垃垃垃垃垃垃垃垃垃垃垃圾君">	
+								啊垃垃垃垃垃垃垃垃垃垃垃垃垃圾君
+							</div>
+						</li>
+						
+					</ul>
 				</div>
 			</div>
-
-			<div class="tabs_tab">
-				<span class="tabs_icon_container">
-					<div class="tabs_icon tabs_new_children" ></div>
-					<div class="tabs_icon tabs_edit"></div>
-					<div class="tabs_icon tabs_remove" ></div>
-				</span>
-				<div class="tabs_icon"><!--用于往下挤高度= =|| --></div>
-				<div class="tab_text" title="啊垃垃垃垃垃垃垃垃垃垃垃垃垃圾君">	
-					啊垃垃垃垃垃垃圾君
-				</div>
-			</div>
-
-			<div class="tabs_tab">
-				<span class="tabs_icon_container">
-					<div class="tabs_icon tabs_new_children" ></div>
-					<div class="tabs_icon tabs_edit" ></div>
-					<div class="tabs_icon tabs_remove" ></div>
-				</span>
-				<div class="tabs_icon"><!--用于往下挤高度= =|| --></div>
-				<div class="tab_text" title="啊垃垃垃垃垃垃垃垃垃垃垃垃垃圾君">	
-					啊垃垃垃垃垃垃垃垃垃圾君
-				</div>
-			</div>
-
-			<div class="tabs_tab">
-				<span class="tabs_icon_container" >
-					<div class="tabs_icon tabs_new_children" ></div>
-					<div class="tabs_icon tabs_edit"></div>
-					<div class="tabs_icon tabs_remove" ></div>
-				</span>
-				<div class="tabs_icon"><!--用于往下挤高度= =|| --></div>
-				<div class="tab_text" title="啊垃垃垃垃垃垃垃垃垃垃垃垃垃圾君">	
-					啊垃垃垃垃垃垃垃垃垃垃垃垃垃圾君
-				</div>
-			</div>
-
-
-		</div>
 	</body>
 </html>
